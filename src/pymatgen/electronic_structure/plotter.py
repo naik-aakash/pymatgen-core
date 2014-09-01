@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 """
 This module implements plotter for DOS and band structure.
 """
@@ -166,7 +164,7 @@ class DosPlotter(object):
                          label=str(key))
             else:
                 plt.plot(x, y, color=color_order[i % len(color_order)],
-                         label=str(key))
+                         label=str(key),linewidth=3)
             if not self.zero_at_efermi:
                 ylim = plt.ylim()
                 plt.plot([self._doses[key]['efermi'],
