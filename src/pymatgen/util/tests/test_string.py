@@ -16,7 +16,37 @@ from pymatgen.util.string import (
     unicodeify,
     unicodeify_spacegroup,
     unicodeify_species,
+    Stringify,
 )
+
+
+class SubStr(Stringify):
+    def __str__(self):
+        return "Fe8O12"
+
+
+class SupStr(Stringify):
+    STRING_MODE = "SUPERSCRIPT"
+
+    def to_pretty_string(self) -> str:
+        return "Fe2+"
+
+    def __str__(self):
+        return "Fe**2+"
+
+
+class StringifyTest(unittest.TestCase):
+    def test_to_latex_string(self):
+        self.assertEqual(SubStr().to_latex_string(), "Fe$_{8}$O$_{12}$")
+        self.assertEqual(SupStr().to_latex_string(), "Fe$^{2+}$")
+
+    def test_to_html_string(self):
+        self.assertEqual(SubStr().to_html_string(), "Fe<sub>8</sub>O<sub>12</sub>")
+        self.assertEqual(SupStr().to_html_string(), "Fe<sup>2+</sup>")
+
+    def test_to_unicode_string(self):
+        self.assertEqual(SubStr().to_unicode_string(), "Fe₈O₁₂")
+        self.assertEqual(SupStr().to_unicode_string(), "Fe²⁺")
 
 
 class FuncTest(unittest.TestCase):
@@ -55,9 +85,7 @@ class FuncTest(unittest.TestCase):
         abc = "a,b,c"
         self.assertEqual(s, transformation_to_string(m, t))
         self.assertEqual(ms, transformation_to_string(m, t, c="m"))
-        self.assertEqual(
-            abc, transformation_to_string(m, t, components=("a", "b", "c"))
-        )
+        self.assertEqual(abc, transformation_to_string(m, t, components=("a", "b", "c")))
 
         m = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
         t = [11, 12, 13]
