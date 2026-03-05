@@ -4,7 +4,6 @@ name: test
 
 on:
   push:
-    branches: ["main", "test-files"]
     paths:
       [
         "src/**/*.*",
@@ -14,7 +13,6 @@ on:
         "setup.py",
       ]
   pull_request:
-    branches: ["main", "test-files"]
     paths:
       [
         "src/**/*.*",
@@ -32,7 +30,7 @@ permissions:
 jobs:
   test:
     # Prevent this action from running on forks
-    if: github.repository == 'materialyzeai/pymatgen-core'
+    if: github.repository == 'materialsproject/pymatgen-core'
     defaults:
       run:
         shell: bash -leo pipefail {0} # Enable mamba env activation by reading bash profile
